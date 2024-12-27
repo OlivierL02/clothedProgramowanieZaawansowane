@@ -1,0 +1,34 @@
+﻿@{
+    var logoutMessage = TempData["LogoutMessage"];
+}
+
+<div style="text-align: center; margin-top: 100px;">
+    <h1></h1>
+</div>
+
+<div class="main-container">
+    <div class="main-image-wrapper">
+        <a asp-controller="Products" asp-action="Index">
+            <img src="/images/RL1.png" alt="Main Product" class="main-image" id="displayedImage">
+        </a>
+    </div>
+</div>
+
+
+<script>
+    const images = [
+        "/images/RL1.png",
+        "/images/adidas1.png",
+        "/images/bones1.png",
+        "/images/hoodie1.png",
+        "/images/pegador1.png",
+        "/images/WEEK1.png",
+    ];
+
+    let currentImageIndex = 0;
+
+    function updateImage() {
+        const imageElement = document.getElementById("displayedImage");
+        imageElement.src = images[currentImageIndex];
+    }
+</script>

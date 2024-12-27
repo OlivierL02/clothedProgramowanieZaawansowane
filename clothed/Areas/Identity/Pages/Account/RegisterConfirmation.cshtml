@@ -1,0 +1,26 @@
+﻿@page
+@model RegisterConfirmationModel
+
+@{
+    ViewData["Title"] = "Account Registration Confirmation";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="d-flex justify-content-center align-items-center" style="height: 100vh; background-color: rgba(0, 0, 0, 0.2);">
+    <div class="text-center" style="width: 100%; max-width: 700px;">
+        <div style="background-color: #1e1e1e; padding: 40px; border-radius: 12px; box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);">
+            <h2 style="color: #00ffff;">ACCOUNT REGISTRATION</h2>
+
+            @if (Model.DisplayConfirmAccountLink)
+            {
+                <p style="color: #fff; font-size: 18px;">Please check your email to confirm your account.</p>
+                <a asp-page="/Login" class="btn btn-primary w-100" style="background-color: #00ffff; border: none; margin-top: 20px;">LOGIN</a>
+            }
+            else
+            {
+                <p style="color: #fff; font-size: 18px;">Something went wrong, please try again later.</p>
+                <a asp-page="/ResendConfirmation" class="btn btn-warning w-100" style="background-color: #ff6347; border: none; margin-top: 20px;">Resend Confirmation Email</a>
+            }
+        </div>
+    </div>
+</div>

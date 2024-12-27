@@ -1,0 +1,112 @@
+﻿@model clothed.Models.Order
+
+@{
+    ViewData["Title"] = "Order Details";
+}
+@{
+    var userEmail = User.Identity.Name;
+}
+
+<style>
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #000;
+        color: #ddd;
+        margin: 0;
+        padding: 0;
+        height: 100vh;
+    }
+
+
+    .order-details-container {
+        width: 80%;
+        margin: 0 auto;
+        margin-top: 140px;
+        background-color: #000;
+        border-radius: 8px;
+        padding: 20px;
+    }
+
+        .order-details-container p {
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+            .order-details-container p strong {
+                color: #00d4cc;
+            }
+
+    .order-items {
+        margin-top: 30px;
+    }
+
+        .order-items ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .order-items li {
+            background-color: #333;
+            margin-bottom: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            color: #bbb;
+            font-size: 14px;
+        }
+
+            .order-items li span {
+                font-weight: bold;
+                color: #00d4cc;
+            }
+
+    .btn-back {
+        display: block;
+        margin-top: 30px;
+        text-align: center;
+        padding: 10px 20px;
+        background-color: #333;
+        color: #00d4cc;
+        text-decoration: none;
+        border-radius: 5px;
+        font-size: 16px;
+        width: 200px;
+        margin-left: auto;
+        margin-right: auto;
+        transition: background-color 0.3s ease;
+    }
+
+        .btn-back:hover {
+            background-color: #00d4cc;
+            color: #121212;
+        }
+</style>
+
+<div class="order-details-container">
+
+    @if (Model.UserEmail == userEmail)
+    {
+        <p><strong>Order Number:</strong> @Model.OrderNumber</p>
+        <p><strong>Order Date:</strong> @Model.CreatedAt.ToString("g")</p>
+        <p><strong>Total Price:</strong> @string.Format("{0:C}", Model.Items.Sum(i => i.Product.Price * i.Quantity))</p>
+
+        <div class="order-items">
+            <h3>Order Items</h3>
+            <ul>
+                @foreach (var item in Model.Items)
+                {
+                    <li>
+                        @item.Product.Name -
+                        <span>@item.Quantity</span> x
+                        @string.Format("{0:C}", item.Product.Price)
+                    </li>
+                }
+            </ul>
+        </div>
+    }
+    else
+    {
+        <p>Order not found.</p>
+    }
+
+    <a href="/Identity/Account/MyOrders" class="btn-back">Back to Orders</a>
+</div>

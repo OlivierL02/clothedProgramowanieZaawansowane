@@ -1,0 +1,155 @@
+﻿@model clothed.Models.Product
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <style>
+        body {
+            background-color: #000;
+            color: #f1f1f1;
+            font-family: 'Roboto', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+        }
+
+        .container {
+            background-color: #000;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.7);
+            width: 100%;
+            max-width: 500px;
+            margin-top: 100px;
+            padding: 50px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #00f7ff;
+            font-size: 28px;
+        }
+
+        .form-group {
+            margin-bottom: 10px;
+        }
+
+            .form-group label {
+                font-weight: bold;
+                color: #a0a0a0;
+            }
+
+            .form-group input {
+                background-color: #333;
+                border: 1px solid #444;
+                color: #f1f1f1;
+                width: 100%;
+                border-radius: 6px;
+                font-size: 14px;
+            }
+
+                .form-group input[type="submit"] {
+                    background-color: #00f7ff;
+                    color: #121212;
+                    border: none;
+                    padding: 12px;
+                    border-radius: 6px;
+                    cursor: pointer;
+                    font-size: 16px;
+                    width: 100%;
+                    transition: background-color 0.3s;
+                }
+
+                    .form-group input[type="submit"]:hover {
+                        background-color: #00d4cc;
+                    }
+
+        .text-danger {
+            color: #ff3f3f;
+        }
+
+        .back-btn-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .back-btn {
+            background-color: #FFD700;
+            color: #121212;
+            padding: 10px 20px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 16px;
+            text-align: center;
+            transition: background-color 0.3s;
+        }
+
+            .back-btn:hover {
+                background-color: #00d4cc;
+            }
+
+            .back-btn:link,
+            .back-btn:visited {
+                text-decoration: none;
+                color: inherit;
+            }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+
+        <form asp-action="Create" method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Price" class="control-label"></label>
+                <input asp-for="Price" class="form-control" />
+                <span asp-validation-for="Price" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="ImageFile" class="control-label">Product Image</label>
+                <input type="file" name="ImageFile" class="form-control" />
+                <span asp-validation-for="ImageUrl" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Create" />
+            </div>
+        </form>
+
+        <div class="back-btn-container">
+            <a class="back-btn" asp-action="Index">Back to List</a>
+        </div>
+    </div>
+
+    @section Scripts {
+        @{
+            await Html.RenderPartialAsync("_ValidationScriptsPartial");
+        }
+    }
+
+</body>
+</html>

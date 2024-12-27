@@ -1,0 +1,24 @@
+﻿@page
+@model ConfirmEmailModel
+@{
+    ViewData["Title"] = "Confirm email";
+}
+
+<div class="d-flex justify-content-center align-items-center" style="height: 100vh;">
+    <div class="text-center" style="width: 100%; max-width: 700px;">
+        <div style="background-color: #121212; padding: 40px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);">
+            <p style="color: #fff; font-size: 18px;">@Model.StatusMessage</p>
+            <div class="mt-4">
+                @if (Model.StatusMessage.Contains("registered"))
+                {
+                    <a asp-page="/Home" class="btn btn-primary w-100" style="background-color: #00ffff; border: none;">GO BACK TO THE MAIN PAGE</a>
+                }
+                else
+                {
+                    <a asp-page="/ResendConfirmation" class="btn btn-primary w-100" style="background-color: #ff6347; border: none;">Resend Confirmation Email</a>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<partial name="_StatusMessage" model="Model.StatusMessage" />

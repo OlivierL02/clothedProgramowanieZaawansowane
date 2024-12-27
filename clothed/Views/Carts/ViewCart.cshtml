@@ -1,0 +1,235 @@
+﻿@model clothed.Models.Cart
+
+@{
+    ViewData["Title"] = "Shopping Cart";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #000;
+            color: #ddd;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            display: flex;
+            justify-content: space-between;
+            padding: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+            gap: 30px;
+        }
+
+        .shipping-address {
+            flex: 0 0 45%;
+            background-color: #222;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
+            margin-top: 50px;
+        }
+
+            .shipping-address h3 {
+                text-align: center;
+                color: #fff;
+                margin-bottom: 15px;
+                font-size: 18px;
+            }
+
+            .shipping-address input {
+                background-color: #333;
+                border: 1px solid #444;
+                padding: 10px;
+                color: #ddd;
+                border-radius: 5px;
+                font-size: 14px;
+                width: 100%;
+                margin-bottom: 10px;
+            }
+
+                .shipping-address input:focus {
+                    outline: none;
+                    border-color: #00d4cc;
+                }
+
+        .btn-checkout {
+            margin-top: 15px;
+            padding: 10px 15px;
+            background-color: #00d4cc;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            text-transform: uppercase;
+            cursor: pointer;
+            width: 100%;
+            font-size: 14px;
+        }
+
+            .btn-checkout:hover {
+                background-color: #00b0a2;
+            }
+
+        .order-summary {
+            flex: 0 0 50%;
+            background-color: #222;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
+            margin-top: 50px;
+        }
+
+            .order-summary h3 {
+                text-align: center;
+                color: #fff;
+                margin-bottom: 15px;
+                font-size: 18px;
+            }
+
+            .order-summary .cart-item {
+                display: flex;
+                align-items: center;
+                margin-bottom: 12px;
+                padding-bottom: 12px;
+                border-bottom: 1px solid #444;
+                position: relative;
+            }
+
+                .order-summary .cart-item img {
+                    width: 60px;
+                    height: 60px;
+                    object-fit: cover;
+                    border-radius: 5px;
+                    margin-right: 15px;
+                }
+
+            .order-summary .cart-item-details {
+                flex: 1;
+            }
+
+                .order-summary .cart-item-details h4 {
+                    margin: 0;
+                    color: #fff;
+                    font-size: 16px;
+                }
+
+                .order-summary .cart-item-details .price {
+                    color: #00d4cc;
+                    font-size: 14px;
+                    margin-top: 5px;
+                }
+
+                .order-summary .cart-item-details .quantity {
+                    margin-top: 5px;
+                    color: #bbb;
+                    font-size: 14px;
+                }
+
+                .order-summary .cart-item-details .remove-btn {
+                    position: absolute;
+                    top: 10px;
+                    right: 10px;
+                    background: transparent;
+                    border: none;
+                    color: #f00;
+                    font-size: 20px;
+                    cursor: pointer;
+                }
+
+            .order-summary .total {
+                font-size: 16px;
+                margin-top: 15px;
+                color: #fff;
+            }
+
+            .order-summary .total-price {
+                font-size: 22px;
+                color: #00d4cc;
+                font-weight: bold;
+            }
+
+        footer {
+            margin-top: 50px;
+        }
+    </style>
+</head>
+<body>
+
+
+
+
+
+    <div class="container">
+        <div class="shipping-address">
+            <h3>Shipping Address</h3>
+            <form method="post" action="@Url.Action("Checkout", "Carts")" id="shippingForm">
+                <input type="text" name="FirstName" placeholder="First Name" required />
+                <input type="text" name="LastName" placeholder="Last Name" required />
+                <input type="text" name="Address" placeholder="Street Address" required />
+                <input type="text" name="AptSuite" placeholder="Apt/Suite" />
+                <input type="text" name="City" placeholder="City" required />
+                <input type="text" name="ZipCode" placeholder="ZIP Code" required />
+                <input type="text" name="Country" placeholder="Country" required />
+                <button type="submit" class="btn-checkout" id="checkoutBtn" style="display: none;">Proceed to Checkout</button>
+            </form>
+        </div>
+
+        <div class="order-summary">
+            <h3>Order Summary</h3>
+            @if (Model?.Items != null && Model.Items.Any())
+            {
+                foreach (var item in Model.Items)
+                {
+                    <div class="cart-item">
+                        <img src="@item.Product.ImageUrl" alt="@item.Product.Name" />
+                        <div class="cart-item-details">
+                            <h4>@item.Product.Name</h4>
+                            <p class="price">@string.Format("{0:C}", item.Product.Price)</p>
+                            <p class="quantity">Quantity: @item.Quantity</p>
+                        </div>
+                        <form method="post" action="@Url.Action("RemoveFromCart", "Carts")">
+                            <input type="hidden" name="cartItemId" value="@item.Id" />
+                            <button type="submit" class="remove-btn">X</button>
+                        </form>
+                    </div>
+                }
+            }
+            else
+            {
+                <p>Your cart is empty.</p>
+            }
+
+            <div class="total">
+                <p>Total Price:</p>
+                <p class="total-price">
+                    @string.Format("{0:C}", Model.Items.Sum(i => i.Product.Price * i.Quantity))
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('shippingForm').addEventListener('input', function() {
+            var form = this;
+            var checkoutBtn = document.getElementById('checkoutBtn');
+            var isValid = form.checkValidity();
+
+            if (isValid) {
+                checkoutBtn.style.display = 'block';
+            } else {
+                checkoutBtn.style.display = 'none';
+            }
+        });
+    </script>
+
+
+</body>
+</html>

@@ -1,0 +1,154 @@
+﻿@model clothed.Models.Product
+
+@{
+    ViewData["Title"] = "Product Details";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+
+    <style>
+
+        .container {
+            margin-top: 50px;
+            padding-bottom: 70px;
+            transform: scale(0.85);
+        }
+
+        .product-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+            .product-header h1 {
+                font-size: 40px;
+                font-weight: bold;
+                color: #fff;
+            }
+
+            .product-header hr {
+                border-top: 1px solid #444;
+                margin: 20px auto;
+                width: 80%;
+            }
+
+        .product-details {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 30px;
+        }
+
+        .product-image-container {
+            max-width: 500px;
+            flex-basis: 40%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+            .product-image-container img {
+                width: 100%;
+                height: auto;
+                object-fit: cover;
+                transition: transform 0.3s ease;
+            }
+
+        .product-info {
+            flex-basis: 50%;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            color: #ddd;
+        }
+
+            .product-info h2 {
+                font-size: 28px;
+                color: #fff;
+            }
+
+            .product-info .price {
+                font-size: 24px;
+                color: #00d4cc;
+                margin-top: 10px;
+            }
+
+            .product-info .description {
+                font-size: 16px;
+                margin-top: 20px;
+                line-height: 1.6;
+            }
+
+        .btn-add-to-cart {
+            font-size: 16px;
+            padding: 12px 20px;
+            background-color: #00d4cc;
+            color: #fff;
+            border: none;
+            border-radius: 20px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 20px;
+        }
+
+            .btn-add-to-cart:hover {
+                background-color: #00d4cc;
+            }
+
+        .back-link {
+            margin-top: 30px;
+            display: flex;
+            justify-content: center;
+        }
+
+            .back-link a {
+                color: #fff;
+                font-size: 16px;
+                text-decoration: none;
+                margin: 0 15px;
+                text-transform: uppercase;
+            }
+
+                .back-link a:hover {
+                    color: #f0ad4e;
+                }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="product-header">
+            <h1>@Model.Name</h1>
+            <hr />
+        </div>
+
+        <div class="product-details">
+            <div class="product-image-container">
+                <img src="@Model.ImageUrl" alt="@Model.Name">
+            </div>
+
+            <div class="product-info">
+                <h2>Description</h2>
+                <p class="description">@Model.Description</p>
+                <p class="price">@string.Format("{0:C}", Model.Price)</p>
+
+                <form asp-controller="Carts" asp-action="AddToCart" method="post">
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" name="productId" value="@Model.Id" />
+                    <button type="submit" class="btn-add-to-cart">Add to Cart</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="back-link">
+            <a href="@Url.Action("Index", "Products")">Back to List</a>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,37 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Profile";
+    ViewData["ActivePage"] = ManageNavPages.Index;
+}
+
+<partial name="_StatusMessage" for="StatusMessage" />
+<div class="row justify-content-center" style="color: white; font-family: 'Arial', sans-serif;">
+    <div class="col-md-6" style="background-color: rgba(0, 0, 0, 0.8); padding: 20px; border-radius: 10px; box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);">
+        <form id="profile-form" method="post" style="display: flex; flex-direction: column; gap: 20px;">
+            <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+
+            <div class="mb-3">
+                <label asp-for="Username" class="form-label" style="color: #00ffff;">Username</label>
+                <input asp-for="Username" class="form-control" placeholder="Please choose your username." disabled
+                       style="background-color: rgba(255, 255, 255, 0.1); color: #ff69b4; border: 1px solid #00ffff; border-radius: 5px;" />
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Input.PhoneNumber" class="form-label" style="color: #ff69b4;">Phone Number</label>
+                <input asp-for="Input.PhoneNumber" class="form-control" placeholder="Please enter your phone number."
+                       style="background-color: rgba(255, 255, 255, 0.1); color: #00ffff; border: 1px solid #ff69b4; border-radius: 5px;" />
+                <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
+            </div>
+
+            <button id="update-profile-button" type="submit"
+                    style="background-color: #ff69b4; color: white; border: none; padding: 10px; border-radius: 5px; font-weight: bold; cursor: pointer;">
+                Save
+            </button>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -1,0 +1,163 @@
+﻿@model clothed.Models.Product
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <style>
+        body {
+            background-color: #000;
+            color: #f1f1f1;
+            font-family: 'Roboto', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background-color: #000;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.7);
+            width: 100%;
+            max-width: 500px;
+            padding: 20px;
+            margin-top: 100px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #00f7ff;
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 10px;
+        }
+
+            .form-group label {
+                font-weight: bold;
+                color: #a0a0a0;
+            }
+
+            .form-group input,
+            .form-group textarea {
+                background-color: #333;
+                border: 1px solid #444;
+                color: #f1f1f1;
+                width: 100%;
+                border-radius: 6px;
+                font-size: 14px;
+                padding: 10px;
+                transition: box-shadow 0.3s ease;
+            }
+
+                .form-group input[type="submit"] {
+                    background-color: #00f7ff;
+                    color: #121212;
+                    border: none;
+                    padding: 12px;
+                    border-radius: 6px;
+                    cursor: pointer;
+                    font-size: 16px;
+                    width: 100%;
+                    transition: background-color 0.3s;
+                }
+
+                    .form-group input[type="submit"]:hover {
+                        background-color: #00d4cc;
+                    }
+
+        .text-danger {
+            color: #ff3f3f;
+        }
+
+        .back-btn-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .back-btn {
+            background-color: #FFD700;
+            color: #121212;
+            padding: 10px 20px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 16px;
+            text-align: center;
+            transition: background-color 0.3s;
+        }
+
+            .back-btn:hover {
+                background-color: #00d4cc;
+            }
+
+            .back-btn:link,
+            .back-btn:visited {
+                text-decoration: none;
+                color: inherit;
+            }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+
+        <form asp-action="Edit" method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <h1>Edit Product</h1>
+
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <textarea asp-for="Description" class="form-control"></textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Price" class="control-label"></label>
+                <input asp-for="Price" class="form-control" />
+                <span asp-validation-for="Price" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label for="ImageFile" class="control-label">Product Image</label>
+
+                @if (!string.IsNullOrEmpty(Model.ImageUrl))
+                {
+                    <div>
+                        <p>Current Image:</p>
+                        <img src="@Model.ImageUrl" alt="Current Product Image" style="max-width: 20%; height: auto; border-radius: 6px;" />
+                    </div>
+                }
+
+                <input type="file" name="ImageFile" class="form-control" />
+                <span asp-validation-for="ImageUrl" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Save" />
+            </div>
+        </form>
+
+        <div class="back-btn-container">
+            <a class="back-btn" asp-action="Index">Back to List</a>
+        </div>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,124 @@
+﻿@model clothed.Models.Order
+
+@{
+    ViewData["Title"] = "Order Confirmation";
+}
+@{
+    var userEmail = User.Identity.Name;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #000;
+            color: #ddd;
+            margin: 0;
+            padding: 0;
+        }
+
+        .confirmation-container {
+            max-width: 800px;
+            margin: 50px auto;
+            margin-top: 200px;
+            background-color: #0000;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
+            padding: 20px;
+        }
+
+        .confirmation-header {
+            text-align: center;
+            color: #00d4cc;
+            margin-bottom: 20px;
+        }
+
+        .confirmation-details p {
+            margin: 10px 0;
+            font-size: 16px;
+        }
+
+        .order-summary {
+            margin-top: 20px;
+        }
+
+            .order-summary h3 {
+                color: #00d4cc;
+                border-bottom: 1px solid #333;
+                padding-bottom: 5px;
+            }
+
+        .order-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #222;
+        }
+
+            .order-item:last-child {
+                border-bottom: none;
+            }
+
+            .order-item strong {
+                color: #fff;
+            }
+
+        .order-total {
+            margin-top: 20px;
+            font-size: 18px;
+            text-align: right;
+        }
+
+            .order-total span {
+                color: #00d4cc;
+                font-weight: bold;
+            }
+
+        .access-denied {
+            text-align: center;
+            color: #ff4d4d;
+            font-size: 18px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    @if (Model.UserEmail != userEmail)
+    {
+        <div class="access-denied" style="margin-top: 400px; padding: 100px;">
+            <h2>You do not have permission to view this order.</h2>
+        </div>
+    }
+    else
+    {
+        <div class="confirmation-container">
+            <h2 class="confirmation-header">Order Confirmation</h2>
+            <div class="confirmation-details">
+                <p>Thank you for your order!</p>
+                <p><strong>Order Number:</strong> @Model.OrderNumber</p>
+                <p><strong>Order Date:</strong> @Model.CreatedAt.ToString("g")</p>
+            </div>
+
+            <div class="order-summary">
+                <h3>Order Summary</h3>
+                @foreach (var item in Model.Items)
+                {
+                    <div class="order-item">
+                        <span><strong>@item.Product.Name</strong> (@item.Quantity x @string.Format("{0:C}", item.Product.Price))</span>
+                        <span>@string.Format("{0:C}", item.Quantity * item.Product.Price)</span>
+                    </div>
+                }
+            </div>
+
+            <div class="order-total">
+                <p>Total Price: <span>@string.Format("{0:C}", Model.Items.Sum(i => i.Product.Price * i.Quantity))</span></p>
+            </div>
+        </div>
+    }
+</body>
+</html>

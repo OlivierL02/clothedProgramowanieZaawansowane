@@ -1,0 +1,37 @@
+﻿@page
+@model ConfirmEmailChangeModel
+@{
+    ViewData["Title"] = "Confirm Email Change";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="d-flex justify-content-center align-items-center" style="height: 100vh; background: linear-gradient(135deg, rgba(0, 0, 0, 0.5, rgba(0, 0, 0, 0.5);">
+    <div class="text-center" style="width: 100%; max-width: 600px; background-color: rgba(0, 0, 0, 0.5; padding: 30px; border-radius: 15px; box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);">
+        <h2 style="color: #00ffff; font-weight: bold; margin-bottom: 20px;">Email Change Confirmation</h2>
+
+        <div style="margin-top: 20px;">
+            @if (Model.StatusMessage.Contains("Thank you"))
+            {
+                <div style="color: #ffffff; font-size: 18px; margin-bottom: 30px;">
+                    <i class="fas fa-check-circle" style="color: #00ff00; font-size: 48px; margin-bottom: 10px;"></i>
+                </div>
+                <a asp-page="/Account/Manage/Index" class="btn btn-primary" style="padding: 15px 20px; font-size: 16px; font-weight: bold; background: linear-gradient(90deg, #00ffff, #00bfff); border: none; border-radius: 8px; text-transform: uppercase; letter-spacing: 1px; transition: all 0.3s;">Return to My Account</a>
+            }
+            else
+            {
+                <div style="color: #ffffff; font-size: 18px; margin-bottom: 30px;">
+                    <i class="fas fa-exclamation-circle" style="color: #ff6347; font-size: 48px; margin-bottom: 10px;"></i>
+                    <p>Something went wrong. Please try again.</p>
+                </div>
+                <a asp-page="/Account/Manage/Index" class="btn btn-danger" style="padding: 15px 20px; font-size: 16px; font-weight: bold; background: linear-gradient(90deg, #ff6347, #ff4500); border: none; border-radius: 8px; text-transform: uppercase; letter-spacing: 1px; transition: all 0.3s;">Retry Email Change</a>
+            }
+        </div>
+    </div>
+</div>
+
+<style>
+    a.btn:hover {
+        transform: scale(1.05);
+        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+    }
+</style>

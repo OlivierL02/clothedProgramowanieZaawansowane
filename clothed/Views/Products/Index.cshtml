@@ -1,0 +1,152 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product List</title>
+
+    <style>
+        .container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            padding: 0 15px;
+            margin-top: 100px;
+            height: 100%;
+            padding-bottom: 70px;
+            width: auto;
+        }
+
+        .row {
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 100px;
+            width: 600px;
+            max-width: 1200px;
+            height: 100%;
+            padding-bottom: 70px;
+        }
+
+        .image-container {
+            position: relative;
+            height: 400px;
+            width: auto%;
+            max-width: 1000px;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+            .image-container img {
+                width: 100%;
+                height: 100%;
+                object-fit: contain;
+                transition: transform 0.3s ease;
+            }
+
+            .image-container:hover img {
+                transform: scale(1.1);
+            }
+
+        .card {
+            border: none;
+            background-color: transparent;
+            box-shadow: none;
+            transition: transform 0.3s ease;
+            width: 200px;
+            max-width: 300px;
+        }
+
+            .card:hover {
+                transform: translateY(-10px);
+            }
+
+        .card-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #fff;
+            line-height: 1.5;
+            margin-bottom: 10px;
+            width: auto;
+        }
+
+        .card-text {
+            font-size: 14px;
+            color: #bbb;
+            line-height: 1.4;
+            margin-bottom: 15px;
+        }
+
+        .card-price {
+            font-size: 16px;
+            color: #ddd;
+        }
+
+        .btn {
+            font-size: 14px;
+            padding: 10px 15px;
+            text-transform: uppercase;
+            border-radius: 20px;
+        }
+
+        .btn-outline-light {
+            border: 1px solid #fff;
+            color: #fff;
+        }
+
+        .btn-outline-warning {
+            border: 1px solid #f0ad4e;
+            color: #f0ad4e;
+        }
+
+        .btn-outline-danger {
+            border: 1px solid #d9534f;
+            color: #d9534f;
+        }
+
+        .ml-2 {
+            margin-left: 10px;
+        }
+
+        .d-flex {
+            display: flex;
+        }
+
+        .justify-content-center {
+            justify-content: center;
+        }
+    </style>
+</head>
+<body style="background-color: #000; color: #fff;">
+    <div class="container">
+        <div class="row">
+            @foreach (var item in Model)
+            {
+                <div class="col-md-4 mb-4 d-flex justify-content-center">
+                    <div class="card w-100">
+                        <a href="@Url.Action("Details", "Products", new { id = item.Id })">
+                            <div class="image-container">
+                                <img src="@item.ImageUrl" class="card-img-top" alt="@item.Name">
+                            </div>
+                        </a>
+                        <div class="card-body text-center">
+                            <h5 class="card-title">@item.Name</h5>
+                            <p class="card-text">@item.Description</p>
+                            <p class="card-price">@string.Format("{0:C}", item.Price)</p>
+                            <div class="d-flex justify-content-center">
+                                @if (User.Identity.Name == "admin@admin.pl")
+                                {
+                                    <a href="@Url.Action("Edit", "Products", new { id = item.Id })" class="btn btn-outline-warning btn-sm ml-2">Edit</a>
+                                    <a href="@Url.Action("Delete", "Products", new { id = item.Id })" class="btn btn-outline-danger btn-sm ml-2">Delete</a>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+
+</body>
+</html>

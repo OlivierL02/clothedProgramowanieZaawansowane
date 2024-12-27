@@ -1,0 +1,122 @@
+﻿@model clothed.Models.Product
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <style>
+        body {
+            background-color: #000;
+            color: #f1f1f1;
+            font-family: 'Roboto', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background-color: #000;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.7);
+            width: 100%;
+            max-width: 500px;
+            padding: 20px;
+            margin-top: 100px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #00f7ff;
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 10px;
+        }
+
+            .form-group label {
+                font-weight: bold;
+                color: #a0a0a0;
+            }
+
+            .form-group dd {
+                background-color: #333;
+                color: #f1f1f1;
+                padding: 10px;
+                border-radius: 6px;
+                font-size: 14px;
+                word-wrap: break-word;
+            }
+
+        .btn-danger {
+            background-color: #ff3f3f;
+            color: #121212;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 18px;
+            transition: background-color 0.3s;
+            width: 100%;
+        }
+
+            .btn-danger:hover {
+                background-color: #cc0000;
+            }
+
+        .back-btn-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .back-btn {
+            background-color: #FFD700;
+            color: #121212;
+            padding: 10px 20px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 16px;
+            text-align: center;
+            transition: background-color 0.3s;
+        }
+
+            .back-btn:hover {
+                background-color: #00d4cc;
+            }
+
+            .back-btn:link,
+            .back-btn:visited {
+                text-decoration: none;
+                color: inherit;
+            }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h3>Are you sure you want to delete this?</h3>
+
+            <form asp-action="Delete">
+                <input type="hidden" asp-for="Id" />
+                <div style="text-align: center;">
+                    <input type="submit" value="Delete" class="btn-danger" />
+                </div>
+            </form>
+
+            <div class="back-btn-container">
+                <a class="back-btn" asp-action="Index">Back to List</a>
+            </div>
+    </div>
+
+</body>
+</html>

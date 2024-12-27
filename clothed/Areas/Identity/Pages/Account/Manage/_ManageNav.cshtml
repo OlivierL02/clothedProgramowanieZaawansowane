@@ -1,0 +1,41 @@
+﻿@inject SignInManager<IdentityUser> SignInManager
+@{
+    var hasExternalLogins = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Any();
+}
+<div style="background-color: rgba(0, 0, 0, 0.9); border-radius: 10px;">
+    <ul class="nav nav-pills flex-column" style="list-style: none; padding: 0;">
+        <li class="nav-item" style="margin-bottom: 10px;">
+            <a class="nav-link @ManageNavPages.IndexNavClass(ViewContext)" id="profile" asp-page="./Index"
+               style="color: #00ffff; text-decoration: none; padding: 10px; border: 1px solid #00ffff; border-radius: 5px; text-align: center; display: block;">
+                Profile
+            </a>
+        </li>
+        <li class="nav-item" style="margin-bottom: 10px;">
+            <a class="nav-link @ManageNavPages.EmailNavClass(ViewContext)" id="email" asp-page="./Email"
+               style="color: #00ffff; text-decoration: none; padding: 10px; border: 1px solid #00ffff; border-radius: 5px; text-align: center; display: block;">
+                Email
+            </a>
+        </li>
+        <li class="nav-item" style="margin-bottom: 10px;">
+            <a class="nav-link @ManageNavPages.ChangePasswordNavClass(ViewContext)" id="change-password" asp-page="./ChangePassword"
+               style="color: #00ffff; text-decoration: none; padding: 10px; border: 1px solid #00ffff; border-radius: 5px; text-align: center; display: block;">
+                Password
+            </a>
+        </li>
+        <li class="nav-item" style="margin-bottom: 10px;">
+            <a class="nav-link @ManageNavPages.MyOrdersNavClass(ViewContext)" id="my-orders" asp-page="/Account/MyOrders"
+               style="color: #00ffff; text-decoration: none; padding: 10px; border: 1px solid #00ffff; border-radius: 5px; text-align: center; display: block;">
+                My Orders
+            </a>
+        </li>
+        @if (hasExternalLogins)
+        {
+            <li id="external-logins" class="nav-item" style="margin-bottom: 10px;">
+                <a id="external-login" class="nav-link @ManageNavPages.ExternalLoginsNavClass(ViewContext)" asp-page="./ExternalLogins"
+                   style="color: #00ffff; text-decoration: none; padding: 10px; border: 1px solid #00ffff; border-radius: 5px; text-align: center; display: block;">
+                    External logins
+                </a>
+            </li>
+        }
+    </ul>
+</div>
